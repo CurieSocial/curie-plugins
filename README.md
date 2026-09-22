@@ -22,7 +22,7 @@ checks the published SHA-256 sum. Once installed, `curie` is on PATH and
 | Host | Install, once per machine |
 | --- | --- |
 | Claude Code | `claude plugin marketplace add CurieSocial/curie-plugins` then `claude plugin install curie@curie-plugins`. In an open session, `/plugin marketplace add CurieSocial/curie-plugins`, `/plugin install curie@curie-plugins` and `/reload-plugins`. |
-| Codex | `codex plugin marketplace add CurieSocial/curie-plugins`, then install Curie from `/plugins`. |
+| Codex | `codex plugin marketplace add CurieSocial/curie-plugins` then `codex plugin add curie@curie-plugins`. In an open session, `/plugins`. |
 | Grok Build | `grok plugin marketplace add CurieSocial/curie-plugins` then `grok plugin install curie --trust`. |
 | Copilot CLI | `copilot plugin marketplace add CurieSocial/curie-plugins` then `copilot plugin install curie@curie-plugins`. |
 | Gemini CLI | `gemini extensions install https://github.com/CurieSocial/curie-plugins`. |

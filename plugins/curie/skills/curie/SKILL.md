@@ -1,6 +1,6 @@
 ---
 name: curie
-description: Work with a Curie library from the command line: search and read papers, write notes, comment, upload files, and manage collections and labels. Installs the Curie CLI if it is missing, then follows the instructions the CLI prints for itself.
+description: Work with a Curie library from the command line. Search and read papers, write notes, comment, upload files, and manage collections and labels. Installs the Curie CLI if it is missing, then follows the instructions the CLI prints for itself.
 ---
 
 # Curie

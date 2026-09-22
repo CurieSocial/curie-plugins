@@ -10,10 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: A strict YAML parser, for the skill frontmatter
+        run: python3 -m pip install --quiet --break-system-packages pyyaml
       - name: The manifests agree
-        run: python3 scripts/check_manifests.py
+        run: python3 scripts/check_manifests.py --no-hosts
+      - name: The gate refuses a repository that does not
+        run: python3 scripts/check_manifests_test.py
 
-  claude-validate:
+  hosts:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,4 +27,6 @@ jobs:
       - name: Install Claude Code
         run: npm install -g @anthropic-ai/claude-code
       - name: Claude Code accepts the plugin
-        run: claude plugin validate ./plugins/curie
+        run: claude plugin validate --strict ./plugins/curie
+      - name: Claude Code accepts the marketplace
+        run: claude plugin validate --strict .
