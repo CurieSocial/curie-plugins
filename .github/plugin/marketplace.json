@@ -1,0 +1,19 @@
+{
+  "name": "curie-plugins",
+  "owner": {
+    "name": "Curie Social",
+    "url": "https://curie.is"
+  },
+  "metadata": {
+    "description": "Official Curie plugin for coding agents."
+  },
+  "plugins": [
+    {
+      "name": "curie",
+      "source": "./plugins/curie",
+      "description": "Read, write and discuss your Curie library without leaving your agent.",
+      "version": "0.1.0",
+      "category": "productivity"
+    }
+  ]
+}

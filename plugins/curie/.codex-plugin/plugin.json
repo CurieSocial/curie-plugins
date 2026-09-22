@@ -1,0 +1,27 @@
+{
+  "name": "curie",
+  "version": "0.1.0",
+  "description": "Read, write and discuss your Curie library without leaving your agent.",
+  "author": {
+    "name": "Curie Social",
+    "url": "https://curie.is"
+  },
+  "homepage": "https://curie.is/cli",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Curie",
+    "shortDescription": "Your Curie library, from your agent.",
+    "longDescription": "Search the open library and your own, read papers, write notes, and answer comments, using the official Curie CLI and your existing Curie session.",
+    "developerName": "Curie Social",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Find recent work in my Curie library on a topic and write me a note on what it disagrees about.",
+      "Read my draft note in Curie and comment on every claim that has no source."
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "curie-plugins",
+  "interface": {
+    "displayName": "Curie plugins"
+  },
+  "plugins": [
+    {
+      "name": "curie",
+      "source": {
+        "source": "local",
+        "path": "./plugins/curie"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
