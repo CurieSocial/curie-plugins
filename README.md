@@ -1,3 +1,5 @@
+<img src="./assets/curie-beehive-icon-512.png" alt="" width="72" align="right" />
+
 # Curie plugins
 
 The official Curie plugin for coding agents. One install per host, and your
@@ -78,9 +80,31 @@ plugins/curie/.grok-plugin/           Grok Build
 plugin.json, skills/, gemini-extension.json
                                       the repository read as one plugin, which
                                       is what Gemini CLI installs
+assets/                               the images, for the listings that ask
+                                      for one by hand
 ```
 
 The two copies of `SKILL.md` are kept identical by the check below.
+
+## The icon
+
+The plugin's mark is the beehive: the six-cell still life Curie's cellular
+automata settles into, in Curie orange on Curie ink.
+
+| File | Use |
+| --- | --- |
+| `assets/curie-beehive-icon-512.png` | the square tile a listing asks you to upload |
+| `assets/curie-beehive-icon.svg` | the same tile, and the source the PNG is rendered from |
+| `assets/curie-beehive.svg` | the mark on its own, transparent, inheriting `currentColor` |
+| `assets/curie-logo.svg`, `assets/curie-logo-512.png` | the Curie app icon, for where the product is named rather than the plugin |
+
+No manifest points at any of them, and none can: Claude Code refuses an `icon`
+field, and the Agent Plugins 1.0 schema defines none and allows nothing extra.
+Every host draws its own list from the name and description instead. The images
+are here for the store submissions that take an upload, and for this page.
+
+Do not redraw the beehive. The six cells sit on the automata's own 12px pitch,
+and `curie-beehive.svg` is the copy everything else scales.
 
 ## Checks
 
@@ -90,8 +114,9 @@ python3 scripts/check_manifests.py
 
 It proves every manifest agrees on the plugin name, version and description,
 that the marketplaces point at `plugins/curie`, that both copies of the skill
-are identical, and that every `curie` command the skill names is one the CLI
-ships. CI runs it, along with `claude plugin validate ./plugins/curie`.
+are identical, that every `curie` command the skill names is one the CLI ships,
+and that each image is the format and the size its filename claims. CI runs it,
+along with `claude plugin validate ./plugins/curie`.
 
 ## Licence
 

@@ -1,0 +1,12 @@
+<svg viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Curie">
+  <title>Curie</title>
+  <!-- The six-cell still life the hero's cellular automata settles into, on
+       the field's own 12px pitch (cell 10.5, radius 1.5). Do not redraw it:
+       these are the same six origins as the landing mark and the app icon. -->
+  <rect x="12" y="0" width="10.5" height="10.5" rx="1.5" fill="currentColor" />
+  <rect x="24" y="0" width="10.5" height="10.5" rx="1.5" fill="currentColor" />
+  <rect x="0" y="12" width="10.5" height="10.5" rx="1.5" fill="currentColor" />
+  <rect x="36" y="12" width="10.5" height="10.5" rx="1.5" fill="currentColor" />
+  <rect x="12" y="24" width="10.5" height="10.5" rx="1.5" fill="currentColor" />
+  <rect x="24" y="24" width="10.5" height="10.5" rx="1.5" fill="currentColor" />
+</svg>

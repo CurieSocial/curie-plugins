@@ -14,9 +14,11 @@ from __future__ import annotations
 import json
 import pathlib
 import shutil
+import struct
 import subprocess
 import sys
 import tempfile
+import zlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
@@ -37,6 +39,22 @@ def unquoted_colon(root: pathlib.Path) -> None:
                 "from the command line.", "from the command line: like this,", 1
             )
         )
+
+
+def png(width: int, height: int) -> bytes:
+    """A real, if tiny, PNG -- so the gate is refusing the size, not the file."""
+
+    def chunk(kind: bytes, body: bytes) -> bytes:
+        crc = zlib.crc32(kind + body) & 0xFFFFFFFF
+        return struct.pack(">I", len(body)) + kind + body + struct.pack(">I", crc)
+
+    rows = b"".join(b"\x00" + b"\xff\x00\x00" * width for _ in range(height))
+    return (
+        b"\x89PNG\r\n\x1a\n"
+        + chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0))
+        + chunk(b"IDAT", zlib.compress(rows))
+        + chunk(b"IEND", b"")
+    )
 
 
 def second_skill(root: pathlib.Path) -> None:
@@ -98,6 +116,15 @@ CASES = {
         r, "plugin.json", lambda d: d.__setitem__("version", "01.2.3")
     ),
     "a skill that is in one skills directory only": second_skill,
+    "an icon that kept its name through a resize": lambda r: (
+        r / "assets/curie-beehive-icon-512.png"
+    ).write_bytes(png(256, 256)),
+    "an icon that is a PNG under an .svg name": lambda r: (
+        r / "assets/curie-beehive.svg"
+    ).write_bytes(png(8, 8)),
+    "an icon that exported as nothing": lambda r: (
+        r / "assets/curie-logo-512.png"
+    ).write_bytes(b""),
 }
 
 

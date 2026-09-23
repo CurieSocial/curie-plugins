@@ -27,9 +27,11 @@ from __future__ import annotations
 import json
 import re
 import shutil
+import struct
 import subprocess
 import sys
 from pathlib import Path, PurePosixPath
+from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -117,13 +119,32 @@ MARKETPLACE_MANIFESTS = {
 # what someone who clones the repository sees first.
 SKILL_ROOTS = ("plugins/curie/skills", "skills")
 
+# The images this repository ships. No manifest names them, and none can:
+# Claude Code refuses an `icon` field under --strict, and the Agent Plugins 1.0
+# schema closes the object and defines no icon either, so there is nowhere in a
+# manifest to put one. They exist for the store submissions that ask for an
+# image by hand, and for the README. That makes them exactly the kind of file
+# that rots unnoticed, so each is checked against what its name claims.
+#
+# curie-beehive* is the plugin's own mark -- the six-cell still life the
+# landing page's automata settles into. curie-logo* is the product's app icon.
+ASSETS = (
+    "assets/curie-beehive.svg",
+    "assets/curie-beehive-icon.svg",
+    "assets/curie-beehive-icon-512.png",
+    "assets/curie-logo.svg",
+    "assets/curie-logo-512.png",
+)
+
 OTHER_REQUIRED = [
     "gemini-extension.json",
     "README.md",
     "LICENSE",
-    "assets/curie-logo-512.png",
-    "assets/curie-logo.svg",
+    *ASSETS,
 ]
+
+PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
+SVG_ROOT = "{http://www.w3.org/2000/svg}svg"
 
 # What each host's own documentation says it reads. Only `name` is universally
 # required; the rest are optional-and-displayed, and we write them everywhere
@@ -531,6 +552,46 @@ def check_required_files() -> None:
             fail(f"{rel}: missing")
 
 
+def check_assets() -> None:
+    """Each image is the format, and the size, its filename claims.
+
+    A store form takes whatever it is handed, and a README renders a broken
+    image without complaining, so nothing downstream would catch a truncated
+    export or a file that kept its name through a resize. This does.
+    """
+    for rel in ASSETS:
+        path = ROOT / rel
+        if not path.exists():
+            continue  # check_required_files has already said so.
+        data = path.read_bytes()
+        if not data:
+            fail(f"{rel}: empty")
+            continue
+
+        if rel.endswith(".svg"):
+            try:
+                root = ElementTree.fromstring(data)
+            except ElementTree.ParseError as error:
+                fail(f"{rel}: not valid XML ({error})")
+                continue
+            if root.tag != SVG_ROOT:
+                fail(f"{rel}: the root element is {root.tag!r}, not an <svg>")
+            continue
+
+        if data[:8] != PNG_MAGIC:
+            fail(f"{rel}: not a PNG")
+            continue
+        # IHDR is always the first chunk, so the width and height are the two
+        # big-endian words after the signature, the length and the type.
+        width, height = struct.unpack(">II", data[16:24])
+        claimed = re.search(r"-(\d+)\.png$", rel)
+        if claimed and (width, height) != (int(claimed.group(1)),) * 2:
+            fail(
+                f"{rel}: the name says {claimed.group(1)} square, and the "
+                f"file is {width}x{height}"
+            )
+
+
 def run_host_validators() -> None:
     """Ask each installed host to accept the manifests it reads.
 
@@ -562,6 +623,7 @@ def main(argv: list[str]) -> int:
     check_gemini(plugin)
     check_skills()
     check_required_files()
+    check_assets()
     if "--no-hosts" not in argv:
         run_host_validators()
 
