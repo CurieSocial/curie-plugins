@@ -32,7 +32,7 @@ def edit_json(root: pathlib.Path, rel: str, change) -> None:
 
 def unquoted_colon(root: pathlib.Path) -> None:
     """The defect that started this: valid to two hosts, invalid YAML to all."""
-    for rel in ("skills/curie/SKILL.md", "plugins/curie/skills/curie/SKILL.md"):
+    for rel in ("skills/library/SKILL.md", "plugins/curie/skills/library/SKILL.md"):
         path = root / rel
         path.write_text(
             path.read_text().replace(

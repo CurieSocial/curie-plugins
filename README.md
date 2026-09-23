@@ -66,7 +66,7 @@ CLI enterprises can push plugins to every client.
 ## Layout
 
 ```
-plugins/curie/skills/curie/SKILL.md   the skill
+plugins/curie/skills/library/SKILL.md the skill
 plugins/curie/plugin.json             Agent Plugins 1.0, also read by Cursor
 plugins/curie/.claude-plugin/         Claude Code
 plugins/curie/.codex-plugin/          Codex
