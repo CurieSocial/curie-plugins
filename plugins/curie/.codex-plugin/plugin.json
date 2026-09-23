@@ -6,7 +6,7 @@
     "name": "Curie Social",
     "url": "https://curie.is"
   },
-  "homepage": "https://curie.is/cli",
+  "homepage": "https://curie.is",
   "license": "MIT",
   "skills": "./skills/",
   "interface": {
@@ -19,6 +19,7 @@
       "Read",
       "Write"
     ],
+    "websiteURL": "https://curie.is",
     "defaultPrompt": [
       "Find recent work in my Curie library on a topic and write me a note on what it disagrees about.",
       "Read my draft note in Curie and comment on every claim that has no source."

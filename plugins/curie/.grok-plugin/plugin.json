@@ -6,7 +6,7 @@
     "name": "Curie Social",
     "url": "https://curie.is"
   },
-  "homepage": "https://curie.is/cli",
+  "homepage": "https://curie.is",
   "license": "MIT",
   "skills": "./skills/"
 }
